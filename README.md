@@ -96,7 +96,7 @@ The custom shell will include the following features:
 
 ## Project Structure
 ```
-myshell/
+shell/
 ├── src/
 │   ├── main.c           # Entry point of the shell.
 │   ├── parser.c         # Command parsing logic.
@@ -118,7 +118,7 @@ myshell/
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd myshell
+   cd shell
    ```
 
 2. Build the project:
