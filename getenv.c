@@ -1,7 +1,5 @@
 #include "shell.h"
 
-extern char **environ;
-
 char *_getenv(const char *name) {
     int i, len;
     
@@ -9,9 +7,9 @@ char *_getenv(const char *name) {
         return (NULL);
     i = 0;
     len = _strlen(name);
-    while (environ[i]) {
-        if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=') {
-            return (environ[i] + len + 1);
+    while (__environ[i]) {
+        if (strncmp(__environ[i], name, len) == 0 && __environ[i][len] == '=') {
+            return (__environ[i] + len + 1);
         }
         i++;
     }
