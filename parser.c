@@ -1,5 +1,5 @@
 #include "shell.h"
-#include <string.h>
+#include <stdlib.h>
 
 void print_prompt(char *s) {
     printf("%s ", s);
@@ -9,7 +9,7 @@ void read_input(char *s) {
     char *lineptr = NULL, **str = NULL;
     size_t n = 0;
     ssize_t n_read;
-    int builtin_result;
+    int builtin_result, exit_stat = 0;
 
     while (1) {
         print_prompt(s);
@@ -24,7 +24,7 @@ void read_input(char *s) {
             free_tokens(str);
             continue;
         }
-        builtin_result = handle_builtins(str);
+        builtin_result = handle_builtins(str, &exit_stat);
         if (builtin_result == 1) {
             free_tokens(str);
             continue;
@@ -38,12 +38,16 @@ void read_input(char *s) {
         free_tokens(str);
     }
     free(lineptr);
+    exit(exit_stat);
 }
 
-int handle_builtins(char **args) {
+int handle_builtins(char **args, int *stat) {
     builtin_t builtins[] = {
         {"exit", builtin_exit},
         {"env", builtin_env},
+        {"setenv", builtin_setenv},
+        {"unsetenv", builtin_unsetenv},
+        {"cd", builtin_cd},
     };
     int num_builtins, i;
 
@@ -53,7 +57,7 @@ int handle_builtins(char **args) {
     num_builtins = sizeof(builtins) / sizeof(builtin_t);
     for (i = 0; i < num_builtins; i++) {
         if (strcmp(args[0], builtins[i].name) == 0) {
-            return (builtins[i].func(args));
+            return (builtins[i].func(args, stat));
         }
     }
     return (0);
