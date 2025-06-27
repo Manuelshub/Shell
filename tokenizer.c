@@ -5,6 +5,9 @@ char **tokenize_line(char *s) {
     char *delim = " ", *s_dup, *recv;
     int i = 0, num_tokens = 0;
 
+    if (!s)
+        return (NULL);
+
     s_dup = strdup(s);
     recv = strtok(s_dup, delim);
     while (recv != NULL) {
