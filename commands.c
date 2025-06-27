@@ -9,7 +9,7 @@ void execute_external(char **str) {
     if (resolved_path != NULL) {
         /* Double check if the filepath exists */
         if (file_exists(resolved_path) != 0) {
-            fprintf(stderr, "%s: command not found\n", main_command);
+            fprintf(stderr, "%s: not found\n", main_command);
             free(resolved_path);
             return;
         }
@@ -32,7 +32,7 @@ void execute_external(char **str) {
         free(resolved_path);
     }
     else
-        fprintf(stderr, "%s: command not found\n", main_command);
+        fprintf(stderr, "%s: not found\n", main_command);
 }
 
 char *handle_external_command(const char *command, const char *env) {
